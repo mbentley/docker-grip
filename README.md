@@ -1,8 +1,7 @@
-mbentley/grip
-=============
+# mbentley/grip
 
 docker image for grip
-based off of alpine:latest
+based off of mbentley/alpine:latest
 
 To pull this image:
 `docker pull mbentley/grip`
