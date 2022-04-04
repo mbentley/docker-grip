@@ -2,6 +2,9 @@
 FROM mbentley/alpine:latest
 LABEL maintainer="Matt Bentley <mbentley@mbentley.net>"
 
+# cache buster
+ARG GRIP_VERSION
+
 RUN apk --no-cache add py-pip &&\
   pip install grip &&\
   mkdir /.grip && mkdir /data
