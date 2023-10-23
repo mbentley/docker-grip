@@ -6,7 +6,7 @@ LABEL maintainer="Matt Bentley <mbentley@mbentley.net>"
 ARG GRIP_VERSION
 
 RUN apk --no-cache add py-pip &&\
-  pip install grip &&\
+  pip install --no-cache-dir grip &&\
   mkdir /.grip && mkdir /data
 
 USER 1000

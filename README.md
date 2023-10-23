@@ -8,7 +8,7 @@ To pull this image:
 
 Example usage:
 
-```
+```bash
 docker run -it --rm -p 8080:8080 \
   -v ${PWD}:/data \
   -v ~/.grip:/.grip \
