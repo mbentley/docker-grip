@@ -2,12 +2,20 @@
 FROM mbentley/alpine:latest
 LABEL maintainer="Matt Bentley <mbentley@mbentley.net>"
 
+# install python3
+RUN apk --no-cache add python3
+
 # cache buster
 ARG GRIP_VERSION
 
-RUN apk --no-cache add py-pip &&\
-  pip install --no-cache-dir --break-system-packages grip &&\
+# use uv in temporary mount & install grip
+RUN --mount=from=ghcr.io/astral-sh/uv,source=/uv,target=/bin/uv \
+  uv venv /opt/venv &&\
+  VIRTUAL_ENV=/opt/venv uv pip install --no-cache grip &&\
   mkdir /.grip && mkdir /data
+
+# add venv to PATH and suppress syntax warnings
+ENV PATH="/opt/venv/bin:$PATH" PYTHONWARNINGS="ignore::SyntaxWarning"
 
 USER 1000
 WORKDIR /data
