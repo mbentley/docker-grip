@@ -11,11 +11,14 @@ ARG GRIP_VERSION
 # use uv in temporary mount & install grip
 RUN --mount=from=ghcr.io/astral-sh/uv,source=/uv,target=/bin/uv \
   uv venv /opt/venv &&\
-  VIRTUAL_ENV=/opt/venv uv pip install --no-cache grip &&\
-  mkdir /.grip && mkdir /data
+  uv pip install --python /opt/venv --no-cache grip &&\
+  mkdir /.grip &&\
+  mkdir /data &&\
+  chown 1000:1000 /.grip
 
 # add venv to PATH and suppress syntax warnings
-ENV PATH="/opt/venv/bin:$PATH" PYTHONWARNINGS="ignore::SyntaxWarning"
+ENV PATH="/opt/venv/bin:${PATH}" \
+  PYTHONWARNINGS="ignore::SyntaxWarning"
 
 USER 1000
 WORKDIR /data
